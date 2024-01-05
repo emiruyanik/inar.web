@@ -2,61 +2,71 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
-public class HomePage {
-    private WebDriver driver;
+public class HomePage extends BasePage {
+
 
     //Locators
+    @FindBy(linkText = "Weborder")
+    private WebElement weborderLink;
 
-    private By weborderLink = By.linkText("Weborder");
-    private By webAutomation = By.linkText("Webautomation");
+    @FindBy(linkText = "Webautomation")
+    private WebElement webAutomationLink;
 
-    private By targetMarketLink = By.linkText("Target Market");
+    @FindBy(linkText = "Target Market")
+    private WebElement targetMarketLink;
+    @FindBy(linkText = "Booking")
+    private WebElement bookingLink;
 
-    private By bookingLink = By.linkText("Booking");
+    @FindBy(linkText = "Handling Certifications")
+    private WebElement handlingCertificationsLink;
 
-    private By handlingCertificationsLink = By.linkText("Handling Certifications");
-
-    private By fileUploading = By.linkText("File Uploading");
+    @FindBy(linkText = "File Uploading")
+    private WebElement fileUploadingLink;
 
     //<h1 class="display-1  text-fifth">Explore Inar's Testing World</h1>
-    private By exploreInarTestWorldTitleText = By.cssSelector("h1.display-1.text-fifth");
+    @FindBy(css = "h1.display-1.text-fifth")
+    private WebElement exploreInarTestWorldTitleText;
+
 
     //constructor
-    public HomePage(WebDriver driver) {
-        this.driver = driver;
+    public HomePage() {
+        super();
     }
 
     //page actions with Java Methods
-    public WebOrderLoginPage clickOnWebOrder() {
-        driver.findElement(weborderLink).click();
-        return new WebOrderLoginPage(driver);
+    public void clickOnWebOrder() {
+        weborderLink.click();
+
     }
 
     public void clickOnWebAutomation() {
-        driver.findElement(webAutomation).click();
+        webAutomationLink.click();
     }
 
     public void clickOnTargetMarget() {
-        driver.findElement(targetMarketLink).click();
+        targetMarketLink.click();
     }
 
     public void clickOnBooking() {
-        driver.findElement(bookingLink).click();
+        bookingLink.click();
     }
 
     public void clickOnHandlingCertifications() {
-        driver.findElement(handlingCertificationsLink).click();
+        handlingCertificationsLink.click();
     }
 
     public void clickOnFileUploading() {
-        driver.findElement(fileUploading).click();
+        fileUploadingLink.click();
     }
 
     public String getWelcomeText() {
-        return driver.findElement(exploreInarTestWorldTitleText).getText();
+        return exploreInarTestWorldTitleText.getText();
     }
-    public void refreshPage(){
+
+    public void refreshPage() {
         driver.navigate().refresh();
     }
 

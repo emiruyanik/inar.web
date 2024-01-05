@@ -3,67 +3,85 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
 
-public class OrderPage {
-    private WebDriver driver;
+public class OrderPage extends BasePage {
     //Product Information
-    private By productDropdownElement = By.id("productSelect");
+    @FindBy(id = "productSelect")
+    private WebElement productDropdownElement;
 
-    private By quantityInputField = By.id("quantityInput");
+    @FindBy(id = "quantityInput")
+    private WebElement quantityInputField;
 
-    private By discountInputField = By.id("discountInput");
+    @FindBy(id = "discountInput")
+    private WebElement discountInputField;
 
-    private By totalInputPrice = By.id("totalInput");
+    @FindBy(id = "totalInput")
+    private WebElement totalInputPrice;
 
-    private By calculateButton = By.xpath("//button[contains(text(),'Calculate')]");
+    @FindBy(xpath = "//button[contains(text(),'Calculate')]")
+    private WebElement calculateButton;
+
 
     //Customer Information
-    private By nameInputText = By.id("name");
-    private By streetInputText = By.id("street");
-    private By cityInputText = By.id("city");
-    private By stateInputText = By.id("state");
-    private By zipInputText = By.id("zip");
-
+    @FindBy(id = "name")
+    private WebElement nameInputText;
+    @FindBy(id = "street")
+    private WebElement streetInputText;
+    @FindBy(id = "city")
+    private WebElement cityInputText;
+    @FindBy(id = "state")
+    private WebElement stateInputText;
+    @FindBy(id = "zip")
+    private WebElement zipInputText;
 
     //Payment Information
+
+
     //Card Type
-    private By visaCardCheckBox = By.id("visa");
-    private By masterCardCheckBox = By.id("mastercard");
-    private By amaricanExpressCheckBox = By.id("amex");
+    @FindBy(id = "visa")
+    private WebElement visaCardCheckBox;
+    @FindBy(id = "mastercard")
+    private WebElement masterCardCheckBox;
+    @FindBy(id = "amex")
+    private WebElement amaricanExpressCheckBox;
+
 
     //Card nr
-    private By cardNumberField = By.id("cardNumber");
+    @FindBy(id = "cardNumber")
+    private WebElement cardNumberField;
+
 
     //expiryDate
-    private By expiryDateField = By.id("expiryDate");
-    private By processButton = By.xpath("//button[contains(text(),'Process')]");
+    @FindBy(id = "expiryDate")
+    private WebElement expiryDateField;
+    @FindBy(xpath = "//button[contains(text(),'Process')]")
+    private WebElement processButton;
 
 
-    public OrderPage(WebDriver driver) {
-        this.driver = driver;
+    public OrderPage() {
+        super();
     }
 
     public void selectProduct(String productName) {
-        WebElement dropDownElement = driver.findElement(productDropdownElement);
-        Select element = new Select(dropDownElement);
+        Select element = new Select(productDropdownElement);
         element.selectByVisibleText(productName);
     }
 
     public void enterQuantity(String quantity) {
-        WebElement quantityElement = driver.findElement(quantityInputField);
-        quantityElement.clear();
-        quantityElement.sendKeys(quantity);
+        quantityInputField.clear();
+        quantityInputField.sendKeys(quantity);
     }
 
     public void enterDiscount(String discount) {
-        WebElement discountElement = driver.findElement(discountInputField);
-        discountElement.clear();
-        discountElement.sendKeys(discount);
+
+        discountInputField.clear();
+        discountInputField.sendKeys(discount);
     }
 
     public void clickCalculateButton() {
-        driver.findElement(calculateButton).click();
+        calculateButton.click();
     }
 
     public String calculatePrice(String productName, String quantity, String discount) {
@@ -72,40 +90,34 @@ public class OrderPage {
         enterDiscount(discount);
         clickCalculateButton();
 
-        WebElement totalPriceElement = driver.findElement(totalInputPrice);
 
-        return totalPriceElement.getAttribute("value");
+        return totalInputPrice.getAttribute("value");
 
     }
 
     public void enterName(String name) {
-        WebElement nameInput = driver.findElement(nameInputText);
-        nameInput.clear();
-        nameInput.sendKeys(name);
+        nameInputText.clear();
+        nameInputText.sendKeys(name);
     }
 
     public void enterStreet(String street) {
-        WebElement streetInput = driver.findElement(streetInputText);
-        streetInput.clear();
-        streetInput.sendKeys(street);
+        streetInputText.clear();
+        streetInputText.sendKeys(street);
     }
 
     public void enterCity(String city) {
-        WebElement cityInput = driver.findElement(cityInputText);
-        cityInput.clear();
-        cityInput.sendKeys(city);
+        cityInputText.clear();
+        cityInputText.sendKeys(city);
     }
 
     public void enterState(String state) {
-        WebElement stateInput = driver.findElement(stateInputText);
-        stateInput.clear();
-        stateInput.sendKeys(state);
+        stateInputText.clear();
+        stateInputText.sendKeys(state);
     }
 
     public void enterZip(String zip) {
-        WebElement zipInput = driver.findElement(zipInputText);
-        zipInput.clear();
-        zipInput.sendKeys(zip);
+        zipInputText.clear();
+        zipInputText.sendKeys(zip);
     }
 
     public void customerInformation(String name, String street, String city, String state, String zip) {
@@ -119,13 +131,13 @@ public class OrderPage {
     public void selectCardType(String cardType) {
         switch (cardType.toLowerCase()) {
             case "visa":
-                driver.findElement(visaCardCheckBox).click();
+                visaCardCheckBox.click();
                 break;
             case "mastercard":
-                driver.findElement(masterCardCheckBox).click();
+                masterCardCheckBox.click();
                 break;
             case "americanexpress":
-                driver.findElement(amaricanExpressCheckBox).click();
+                amaricanExpressCheckBox.click();
                 break;
             default:
                 System.out.println("Card type doesn't exists");
@@ -133,15 +145,13 @@ public class OrderPage {
     }
 
     public void enterCardNumber(String cardNo) {
-        WebElement cardNumberInput = driver.findElement(cardNumberField);
-        cardNumberInput.clear();
-        cardNumberInput.sendKeys(cardNo);
+        cardNumberField.clear();
+        cardNumberField.sendKeys(cardNo);
     }
 
     public void enterExpiryDate(String expiryDate) {
-        WebElement expiryDateInput = driver.findElement(expiryDateField);
-        expiryDateInput.clear();
-        expiryDateInput.sendKeys(expiryDate);
+        expiryDateField.clear();
+        expiryDateField.sendKeys(expiryDate);
     }
 
     public void paymentInformation(String cardType, String cardNo, String expiryDate) {
@@ -160,6 +170,6 @@ public class OrderPage {
     }
 
     public void clickProcessButton() {
-        driver.findElement(processButton).click();
+        processButton.click();
     }
 }

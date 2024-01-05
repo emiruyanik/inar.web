@@ -1,39 +1,36 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import pages.HomePage;
 import pages.OrderPage;
 import pages.WebOrderHomePage;
 import pages.WebOrderLoginPage;
+import utils.BrowserUtils;
+import utils.Driver;
 
 import java.time.Duration;
 
-public class PagesTest {
+public class PagesTest extends Hook{
     @Test
     void pageTest() throws InterruptedException {
-        WebDriver driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.manage().window().maximize();
-        driver.get("https://InarAcademy:Fk160621.@test.inar-academy.com");
 
-        HomePage homePage = new HomePage(driver);
-        WebOrderLoginPage webOrderLoginPage = homePage.clickOnWebOrder();
+        HomePage homePage = new HomePage();
+        homePage.clickOnWebOrder();
 
-        WebOrderHomePage webOrderHomePage = webOrderLoginPage.login("Inar", "Academy");
+        WebOrderLoginPage webOrderLoginPage = new WebOrderLoginPage();
+        webOrderLoginPage.login("Inar", "Academy");
 
 
 //        OrderPage orderPage = webOrderHomePage.navigateToOrder();
 //        String totalPrice = orderPage.calculatePrice("Books", "10", "10");
 //
 //        Assertions.assertEquals("810",totalPrice);
-
-        OrderPage orderPage = webOrderHomePage.navigateToOrder();
+        WebOrderHomePage webOrderHomePage = new WebOrderHomePage();
+        webOrderHomePage.navigateToOrder();
+        OrderPage orderPage = new OrderPage();
         orderPage.enterProductInformation("Books", "10", "10");
         orderPage.customerInformation("emo", "main", "angara", "IA", "06");
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("window.scroll(0,1000)");
+        BrowserUtils.scrollDown();
         Thread.sleep(1000);
         orderPage.paymentInformation("visa", "4938281746192845", "07/26");
         orderPage.clickProcessButton();

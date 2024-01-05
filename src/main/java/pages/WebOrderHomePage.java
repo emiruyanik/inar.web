@@ -2,29 +2,34 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
-public class WebOrderHomePage {
-    private WebDriver driver;
-    private By viewAllOrdersLink = By.linkText("View all orders");
-    private By viewAllProductsLink = By.linkText("View all products");
-    private By orderLink = By.linkText("Order");
+public class WebOrderHomePage extends BasePage {
+    @FindBy(linkText = "View all orders")
+    private WebElement viewAllOrdersLink;
+    @FindBy(linkText = "View all products")
+    private WebElement viewAllProductsLink;
+    @FindBy(linkText = "Order")
+    private WebElement orderLink;
 
-    public WebOrderHomePage(WebDriver driver) {
-        this.driver = driver;
+
+    public WebOrderHomePage() {
+        super();
     }
 
-    public ViewAllOrdersPage navigateToAllOrdersPage() {
-        driver.findElement(viewAllOrdersLink).click();
-        return new ViewAllOrdersPage(driver);
+    public void navigateToAllOrdersPage() {
+        viewAllOrdersLink.click();
+
     }
 
-    public ViewAllProductsPage navigateToViewAllProducts() {
-        driver.findElement(viewAllProductsLink).click();
-        return new ViewAllProductsPage(driver);
+    public void navigateToViewAllProducts() {
+        viewAllProductsLink.click();
+
     }
 
-    public OrderPage navigateToOrder() {
-        driver.findElement(orderLink).click();
-        return new OrderPage(driver);
+    public void navigateToOrder() {
+        orderLink.click();
+
     }
 }
