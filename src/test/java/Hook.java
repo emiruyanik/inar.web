@@ -6,6 +6,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.Driver;
 
 import java.time.Duration;
 
@@ -16,46 +17,15 @@ public class Hook {
 
     @BeforeAll
     public static void setUpBeforeTest() {
-        String browser = System.getProperty("browser", "chrome");
-
-        switch (browser.toLowerCase()) {
-            case "firefox":
-                driver = new FirefoxDriver();
-                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-                break;
-            case "edge":
-                driver = new EdgeDriver();
-                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-                break;
-            case "chrome":
-            default:
-                driver = new ChromeDriver();
-                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-                break;
-        }
-        driver.manage().window().maximize();
-        driver.get("https://InarAcademy:Fk160621.@test.inar-academy.com");
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        if (browser.equalsIgnoreCase("firefox")) {
-            driver.navigate().refresh();
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }
+        Driver.getDriver();
 
 
     }
 
     @AfterAll
     public static void tearDownAfterTest() {
-        if (driver != null) {
-            driver.quit();
+        if (Driver.getDriver() != null) {
+            Driver.getDriver().quit();
         }
     }
 }
