@@ -13,22 +13,22 @@ public class Driver {
 
     }
 
-    public static WebDriver getDriver()  {
+    public synchronized static WebDriver getDriver() {
         if (DRIVER_THREAD_LOCAL.get() == null) {
             WebDriver driver;
-            String browser=System.getProperty("browser","chrome");
-            switch (browser.toLowerCase()){
+            String browser = System.getProperty("browser", "chrome");
+            switch (browser.toLowerCase()) {
                 case "chrome":
-                    driver=new ChromeDriver();
+                    driver = new ChromeDriver();
                     break;
                 case "firefox":
-                    driver=new FirefoxDriver();
+                    driver = new FirefoxDriver();
                     break;
                 case "edge":
-                    driver=new EdgeDriver();
+                    driver = new EdgeDriver();
                     break;
                 default:
-                    driver=new ChromeDriver();
+                    driver = new ChromeDriver();
 
 
             }
@@ -39,7 +39,7 @@ public class Driver {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            if (browser.equalsIgnoreCase("firefox")){
+            if (browser.equalsIgnoreCase("firefox")) {
                 driver.navigate().refresh();
                 try {
                     Thread.sleep(1000);
@@ -50,5 +50,13 @@ public class Driver {
             DRIVER_THREAD_LOCAL.set(driver);
         }
         return DRIVER_THREAD_LOCAL.get();
+    }
+
+    public static synchronized void closeDriver() {
+        WebDriver currentDriver = DRIVER_THREAD_LOCAL.get();
+        if (currentDriver != null) {
+            currentDriver.quit();
+            DRIVER_THREAD_LOCAL.remove();
+        }
     }
 }

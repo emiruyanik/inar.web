@@ -24,8 +24,6 @@ public class Hook {
 
     @AfterAll
     public static void tearDownAfterTest() {
-        if (Driver.getDriver() != null) {
-            Driver.getDriver().quit();
-        }
+       Driver.closeDriver();
     }
 }
